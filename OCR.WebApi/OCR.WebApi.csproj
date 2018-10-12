@@ -5,10 +5,6 @@
     <UserSecretsId>aspnet-OCR.WebApi-6C7791DF-D2B0-4360-80DB-02CB77D9BD40</UserSecretsId>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>\Debug\netcoreapp2.1\OCR.WebApi.xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
@@ -19,10 +15,6 @@
     <ProjectReference Include="..\OCR.BLL\OCR.BLL.csproj" />
     <ProjectReference Include="..\OCR.Common\OCR.Common.csproj" />
     <ProjectReference Include="..\OCR.DAL\OCR.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
 </Project>

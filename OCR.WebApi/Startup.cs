@@ -57,6 +57,16 @@ namespace OCR.WebApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.RoutePrefix = "help";
+                    c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1");
+                    c.InjectStylesheet("../css/swagger.min.css");
+
+                });
             }
             else
             {
@@ -70,11 +80,7 @@ namespace OCR.WebApi
 
             app.UseAuthentication();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.RoutePrefix = "help";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            
 
             app.UseMvc(routes =>
             {
