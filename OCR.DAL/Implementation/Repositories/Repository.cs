@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OCR.DAL.DbContext;
-using CDB.DAL.Abstraction.Repositories;
+using OCR.DAL.Abstraction.Repositories;
 
-namespace CDB.DAL.Implementation.Repositories
+namespace OCR.DAL.Implementation.Repositories
 
 {
 

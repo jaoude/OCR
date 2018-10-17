@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 
 
-namespace CDB.DAL.Abstraction.Repositories
+namespace OCR.DAL.Abstraction.Repositories
 
 {
 

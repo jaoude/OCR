@@ -4,9 +4,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using CDB.DAL.Abstraction.UnitOfWork;
+using OCR.DAL.Abstraction.UnitOfWork;
+using OCR.DAL.Abstraction.Repositories;
 
-namespace CDB.DAL.Implementation.UnitOfWork
+namespace OCR.DAL.Implementation.UnitOfWork
 
 {
 
@@ -21,6 +22,8 @@ namespace CDB.DAL.Implementation.UnitOfWork
             _db = db;
             _serviceProvider = serviceProvider;
         }
+        public IPagesRepository Pages => _serviceProvider.GetService<IPagesRepository>();
+
         public async Task<int> SaveChangesAsync(CancellationToken ct)
         {
             return await _db.SaveChangesAsync(ct);

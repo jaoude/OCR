@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CDB.DAL.Abstraction.UnitOfWork;
+using OCR.DAL.Abstraction.UnitOfWork;
 using Microsoft.Extensions.Logging;
 using OCR.BLL.Abstraction;
 

@@ -18,6 +18,6 @@ namespace OCR.Core.Model
         public int IssueNumber { get; set; }
 
         [Column(TypeName = "varbinary(max)")]
-        public byte Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }
