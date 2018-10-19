@@ -11,7 +11,7 @@ using OCR.BLL.Abstraction;
 using OCR.BLL.Abstraction.Service;
 using OCR.BLL.Dto.Request;
 using OCR.WebApi.Models;
-
+using Microsoft.AspNetCore.Mvc;
 namespace OCR.WebApi.Controllers
 {
     [Route("[controller]/[action]")]
@@ -26,26 +26,9 @@ namespace OCR.WebApi.Controllers
             _pageService = pageService;
         }
 
+       
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult> Index(CancellationToken ct)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    return null;
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e.Message);
-                }
-            }
-            return null;
-
-        }
-        [AllowAnonymous]
-        [HttpPost]
         //public async Task<ActionResult> Upload(List<PageUploadDto> pageuploaddto, CancellationToken ct)
         public async Task<ActionResult> Upload(/*List<PageUploadDto> pageuploaddto, */CancellationToken ct)
         {
@@ -63,5 +46,11 @@ namespace OCR.WebApi.Controllers
             return null;
 
         }
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
     }
 }

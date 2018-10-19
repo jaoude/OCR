@@ -13,6 +13,16 @@ using OCR.DAL.DbContext;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using OCR.BLL.Abstraction.Service;
+using OCR.BLL.Implementation.Service;
+using OCR.BLL.Abstraction;
+using OCR.DAL.Abstraction.UnitOfWork;
+using OCR.DAL.Implementation.UnitOfWork;
+using OCR.DAL.Abstraction.Repositories;
+using OCR.DAL.Implementation.Repositories;
+using OCR.BLL.Implementation;
+using AutoMapper;
+using OCR.BLL.Implementation.Helper;
 
 namespace OCR.WebApi
 {
@@ -41,8 +51,22 @@ namespace OCR.WebApi
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IPageService, PageService>();
+            services.AddTransient<IBaseService, BaseService>();
+            services.AddTransient<IModelMapHelper, ModelMapHelper>();          
+            services.AddTransient<IUnitOfWork, UnitOfWork>();         
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IPagesRepository, PagesRepository>();
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton(mapper);
 
             services.AddSwaggerGen(c =>
             {

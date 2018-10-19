@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OCR.BLL.Implementation
 {
-    class ModelMapHelper : IModelMapHelper
+    public class ModelMapHelper : IModelMapHelper
     {
         private readonly IMapper _mapper;
 

@@ -11,7 +11,7 @@ using OCR.BLL.Abstraction;
 namespace OCR.WebApi.Controllers
 {
     [Authorize]
-    public class BaseController<T> : ControllerBase
+    public class BaseController<T> : Controller
     {
         protected readonly ILogger<T> _logger;
         protected readonly IBaseService _baseEngine;
