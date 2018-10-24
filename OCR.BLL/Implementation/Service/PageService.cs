@@ -22,25 +22,78 @@ namespace OCR.BLL.Implementation.Service
         public async Task UploadPages(List<PageUploadDto> pages, CancellationToken ct)
         {
             List<Page> pageEntities = new List<Page>();
+            Page pageEntity1 = new Page();
+            pageEntity1.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity1.IssueNumber = 42;
+            pageEntity1.PageNumber = 4467;
+            pageEntity1.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.txt");
+            pageEntity1.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.gif");
+            pageEntities.Add(pageEntity1);
 
-            //foreach (PageUploadDto pageDto in pages)
-            {
-               ///* Page pageEntity = new Page();
-               // pageEntity.IssuDate = pageDto.IssuDate;
-               // pageEntity.IssueNumber = pageDto.IssueNumber;
-               // pageEntity.PageNumber = pageDto.PageNumber;
-               // pageEntity.FullText = File.ReadAllText(pageDto.FullText);
-               // pageEntity.Image = File.ReadAllBytes(pageDto.Image);
-               // pageEntities.Add(pageEntity);
+            Page pageEntity2 = new Page();
+            pageEntity2.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity2.IssueNumber = 42;
+            pageEntity2.PageNumber = 4468;
+            pageEntity2.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4468.txt");
+            pageEntity2.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4468.gif");
+            pageEntities.Add(pageEntity2);
 
-                Page pageEntity = new Page();
-                pageEntity.IssuDate = DateTime.Now;
-                pageEntity.IssueNumber = 2223;
-                pageEntity.PageNumber = 456;
-                pageEntity.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.txt");
-                pageEntity.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.gif");
-                pageEntities.Add(pageEntity);
-            }
+            Page pageEntity3 = new Page();
+            pageEntity3.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity3.IssueNumber = 42;
+            pageEntity3.PageNumber = 4469;
+            pageEntity3.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4469.txt");
+            pageEntity3.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4469.gif");
+            pageEntities.Add(pageEntity3);
+
+            Page pageEntity4 = new Page();
+            pageEntity4.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity4.IssueNumber = 42;
+            pageEntity4.PageNumber = 4470;
+            pageEntity4.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4470.txt");
+            pageEntity4.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4470.gif");
+            pageEntities.Add(pageEntity4);
+
+            Page pageEntity5 = new Page();
+            pageEntity5.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity5.IssueNumber = 42;
+            pageEntity5.PageNumber = 4471;
+            pageEntity5.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4471.txt");
+            pageEntity5.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4471.gif");
+            pageEntities.Add(pageEntity5);
+
+            Page pageEntity6 = new Page();
+            pageEntity6.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity6.IssueNumber = 42;
+            pageEntity6.PageNumber = 4472;
+            pageEntity6.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4472.txt");
+            pageEntity6.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4472.gif");
+            pageEntities.Add(pageEntity6);
+
+            Page pageEntity7 = new Page();
+            pageEntity7.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity7.IssueNumber = 42;
+            pageEntity7.PageNumber = 4473;
+            pageEntity7.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4473.txt");
+            pageEntity7.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4473.gif");
+            pageEntities.Add(pageEntity7);
+
+            Page pageEntity8 = new Page();
+            pageEntity8.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity8.IssueNumber = 42;
+            pageEntity8.PageNumber = 4474;
+            pageEntity8.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4474.txt");
+            pageEntity8.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4474.gif");
+            pageEntities.Add(pageEntity8);
+
+            Page pageEntity9 = new Page();
+            pageEntity9.IssuDate = Convert.ToDateTime("09/27/2018");
+            pageEntity9.IssueNumber = 42;
+            pageEntity9.PageNumber = 4475;
+            pageEntity9.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4475.txt");
+            pageEntity9.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4475.gif");
+            pageEntities.Add(pageEntity9);
+
 
             _uow.Pages.AddRange(pageEntities);
             _uow.SaveChanges();

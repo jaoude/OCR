@@ -27,7 +27,7 @@ namespace OCR.WebApi.Controllers
         }
 
        
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         //public async Task<ActionResult> Upload(List<PageUploadDto> pageuploaddto, CancellationToken ct)
         public async Task<ActionResult> Upload(/*List<PageUploadDto> pageuploaddto, */CancellationToken ct)
