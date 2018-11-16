@@ -98,5 +98,12 @@ namespace OCR.BLL.Implementation.Service
             _uow.Pages.AddRange(pageEntities);
             _uow.SaveChanges();
         }
+
+
+        public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
+        {
+            byte[] imageData = _uow.Pages.Get(imageId).Image;
+            return imageData;
+        }     
     }
 }

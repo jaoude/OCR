@@ -44,14 +44,15 @@
     </script>
 </head>
 <body>
-    <form class="example">
+    
+    <form class="example" action="/action_page.php">
         <input id="textbox_id" type="text" placeholder="Search.." name="search">
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
     <br/>
    
     <center>
-        <img src="../images/Pages/4467.gif">
+        <img src="@Url.Action("GetDummyImage", "Page", new { id = 22 })" alt="Person Image" />   
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>

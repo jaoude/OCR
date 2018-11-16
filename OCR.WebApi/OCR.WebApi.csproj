@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Page\GetDummyImage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Page\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

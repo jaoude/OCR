@@ -26,11 +26,10 @@ namespace OCR.WebApi.Controllers
             _pageService = pageService;
         }
 
-       
+
         //[AllowAnonymous]
         [HttpGet]
-        //public async Task<ActionResult> Upload(List<PageUploadDto> pageuploaddto, CancellationToken ct)
-        public async Task<ActionResult> Upload(/*List<PageUploadDto> pageuploaddto, */CancellationToken ct)
+        public async Task<ActionResult> Upload(CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -52,5 +51,24 @@ namespace OCR.WebApi.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public async Task<ActionResult> GetDummyImage(CancellationToken ct)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = _pageService.GetDummyImage(22, ct);
+                   var image = new FileStreamResult(new System.IO.MemoryStream(result.Result), "image/jpeg");
+                    return image;
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message);
+                }
+            }
+            return null;
+
+        }
     }
 }
