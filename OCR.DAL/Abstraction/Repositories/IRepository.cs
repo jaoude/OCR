@@ -12,7 +12,7 @@ namespace OCR.DAL.Abstraction.Repositories
 
     {
 
-        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> Get();
 
 
 

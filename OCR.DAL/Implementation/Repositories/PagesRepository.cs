@@ -12,7 +12,7 @@ namespace OCR.DAL.Implementation.Repositories
     {
         public PagesRepository(ApplicationDbContext _db) : base(_db)
         {
-
+           
         }
     }
 }

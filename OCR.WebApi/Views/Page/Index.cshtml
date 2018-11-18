@@ -33,32 +33,80 @@
             clear: both;
             display: table;
         }
+
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #customers tr:hover {
+                background-color: #ddd;
+            }
     </style>
 
     <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
     <script type="text/javascript">
-      if (typeof(Yamli) == 'object' && Yamli.init())
-      {
-        Yamli.yamlify('textbox_id');
-      }
+        if (typeof (Yamli) == 'object' && Yamli.init()) {
+            Yamli.yamlify('search');
+        }
     </script>
 </head>
 <body>
-    
-    <form class="example" action="/action_page.php">
-        <input id="textbox_id" type="text" placeholder="Search.." name="search">
+
+    <form class="example">
+        <input id='myInput' onkeyup='searchTable()' type='text' name="search">
         <button type="submit"><i class="fa fa-search"></i></button>
+        <br />
+        <br />
+        <br />
+        <center>
+            <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="">Next</a></li>
+                </ul>
+            </nav>
+        </center>
     </form>
-    <br/>
-   
-    <center>
-        <img src="@Url.Action("GetDummyImage", "Page", new { id = 22 })" alt="Person Image" />   
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-    </center>
 </body>
 </html>
+<script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("customers");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script> @* search in table ajax *@
+
+@*Add ajax jquery call to call the pagecontroller searchfortext
+    (string as parameter) retrn list of (page number, string )
+    Paste the result in the div.update (listbox)
+    Upon click on any reult => getImage(pagenumber)
+    On next arrow and previous arrow (getImage (pagenum-1), pagenum+1)*@

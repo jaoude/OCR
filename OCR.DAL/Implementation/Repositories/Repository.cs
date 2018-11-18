@@ -30,7 +30,7 @@ namespace OCR.DAL.Implementation.Repositories
 
 
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> Get()
 
         {
 

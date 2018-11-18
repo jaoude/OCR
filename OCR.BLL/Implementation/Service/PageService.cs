@@ -10,6 +10,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace OCR.BLL.Implementation.Service
 {
@@ -98,12 +99,15 @@ namespace OCR.BLL.Implementation.Service
             _uow.Pages.AddRange(pageEntities);
             _uow.SaveChanges();
         }
-
-
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
         {
             byte[] imageData = _uow.Pages.Get(imageId).Image;
             return imageData;
-        }     
+        }
+        public List<Tuple<int, string>> SearchForText(string text, CancellationToken ct)
+        {
+            return _uow.Pages.Get().Where(pg => pg.FullText.Contains(text)).
+                Select(res => new Tuple<int, string>(res.PageNumber, res.FullText)).ToList(); ;
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace OCR.DAL.Abstraction.Repositories
 {
     public interface IPagesRepository : IRepository<Page>
     {
-        
+       
     }
 }

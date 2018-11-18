@@ -45,6 +45,7 @@ namespace OCR.WebApi.Controllers
             return null;
 
         }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -58,8 +59,8 @@ namespace OCR.WebApi.Controllers
             {
                 try
                 {
-                    var result = _pageService.GetDummyImage(22, ct);
-                   var image = new FileStreamResult(new System.IO.MemoryStream(result.Result), "image/jpeg");
+                    var result = _pageService.GetDummyImage(1, ct);
+                    var image = new FileStreamResult(new System.IO.MemoryStream(result.Result), "image/jpeg");
                     return image;
                 }
                 catch (Exception e)
@@ -69,6 +70,24 @@ namespace OCR.WebApi.Controllers
             }
             return null;
 
+        }
+
+        [AllowAnonymous]
+        public List<Tuple<int,string>> SearchForText(string text,CancellationToken ct)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    List <Tuple<int, string>> result = _pageService.SearchForText(text, ct);
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message);
+                }
+            }
+            return null;
         }
     }
 }
