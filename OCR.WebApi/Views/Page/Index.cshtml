@@ -60,12 +60,54 @@
             Yamli.yamlify('search');
         }
     </script>
+
+    <script>
+        function searchTable() @* search in table ajax *@ 
+        {
+            var input, filter, found, table, tr, td, i, j;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("customers");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+        function write() {
+            alert(hi);
+            //var months = ["January", "feb", "re"];
+            //document.write("<table border='1' width='200'");
+            //document.write("<tr><th>Month</th></tr>");
+            //for (var i = 0; i < 3; i++) {
+            //    documen.write("<tr><td>" + (i + 1) + "</td><td>" + months[i] + "</td></tr>");
+            //}
+            //document.write("</table>");
+        }
+
+
+        $(document).ready(function () {
+            $('#search').click(function () {
+                alert('hi');
+            });
+        });
+    </script> 
 </head>
 <body>
-
     <form class="example">
-        <input id='myInput' onkeyup='searchTable()' type='text' name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
+        <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
+        <button id="search" onclick="write();" type="submit"><i class="fa fa-search"></i></button>
+        <br />
         <br />
         <br />
         <br />
@@ -73,37 +115,17 @@
             <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
         </center>
     </form>
+
+
 </body>
 </html>
-<script>
-    function searchTable() {
-        var input, filter, found, table, tr, td, i, j;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("customers");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
-                }
-            }
-            if (found) {
-                tr[i].style.display = "";
-                found = false;
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-</script> @* search in table ajax *@
+
 
 @*Add ajax jquery call to call the pagecontroller searchfortext
     (string as parameter) retrn list of (page number, string )

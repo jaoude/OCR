@@ -107,7 +107,7 @@ namespace OCR.BLL.Implementation.Service
         public List<Tuple<int, string>> SearchForText(string text, CancellationToken ct)
         {
             return _uow.Pages.Get().Where(pg => pg.FullText.Contains(text)).
-                Select(res => new Tuple<int, string>(res.PageNumber, res.FullText)).ToList(); ;
+                Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(text[0]-10,10))).ToList();
         }
     }
 }

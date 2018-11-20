@@ -27,7 +27,6 @@ namespace OCR.WebApi.Controllers
         }
 
 
-        //[AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> Upload(CancellationToken ct)
         {
@@ -53,13 +52,13 @@ namespace OCR.WebApi.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<ActionResult> GetDummyImage(CancellationToken ct)
+        public async Task<ActionResult> GetDummyImage(int id,CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = _pageService.GetDummyImage(1, ct);
+                    var result = _pageService.GetDummyImage(id, ct);
                     var image = new FileStreamResult(new System.IO.MemoryStream(result.Result), "image/jpeg");
                     return image;
                 }
@@ -69,7 +68,6 @@ namespace OCR.WebApi.Controllers
                 }
             }
             return null;
-
         }
 
         [AllowAnonymous]
