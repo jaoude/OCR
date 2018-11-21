@@ -6,6 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         form.example input[type=text] {
             padding: 10px;
@@ -54,16 +55,71 @@
             }
     </style>
 
-    <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
-    <script type="text/javascript">
-        if (typeof (Yamli) == 'object' && Yamli.init()) {
-            Yamli.yamlify('search');
-        }
-    </script>
+    @*<script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
+        <script type="text/javascript">
+            if (typeof (Yamli) == 'object' && Yamli.init()) {
+                Yamli.yamlify('search');
+            }
+        </script>*@
 
-    <script>
-        function searchTable() @* search in table ajax *@ 
-        {
+
+</head>
+<body>
+    @*<form class="example">*@
+    <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
+    <button id="search"><i class="fa fa-search"></i></button>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="myResultTable">
+        <ul>
+            <li>hi</li>
+        </ul>
+    </div>
+    <center>
+        <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </center>
+    @*</form>*@
+
+
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#search').on('click',function () {
+            $.ajax({
+                type: "POST",
+                url: '/Page/SearchForText',
+                data: param = "abc", //why? ma aam toussal??
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+                alert(data); //
+               // $('#myResultTable').html(data);
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+
+
+        function searchTable() {
             var input, filter, found, table, tr, td, i, j;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
@@ -84,48 +140,8 @@
                 }
             }
         }
-        function write() {
-            alert(hi);
-            //var months = ["January", "feb", "re"];
-            //document.write("<table border='1' width='200'");
-            //document.write("<tr><th>Month</th></tr>");
-            //for (var i = 0; i < 3; i++) {
-            //    documen.write("<tr><td>" + (i + 1) + "</td><td>" + months[i] + "</td></tr>");
-            //}
-            //document.write("</table>");
-        }
-
-
-        $(document).ready(function () {
-            $('#search').click(function () {
-                alert('hi');
-            });
-        });
-    </script> 
-</head>
-<body>
-    <form class="example">
-        <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
-        <button id="search" onclick="write();" type="submit"><i class="fa fa-search"></i></button>
-        <br />
-        <br />
-        <br />
-        <br />
-        <center>
-            <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-        </center>
-    </form>
-
-
-</body>
-</html>
-
+         });
+</script>
 
 @*Add ajax jquery call to call the pagecontroller searchfortext
     (string as parameter) retrn list of (page number, string )

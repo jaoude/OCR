@@ -52,7 +52,7 @@ namespace OCR.WebApi.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<ActionResult> GetDummyImage(int id,CancellationToken ct)
+        public async Task<ActionResult> GetDummyImage(int id, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +70,7 @@ namespace OCR.WebApi.Controllers
             return null;
         }
 
+        [HttpPost]
         [AllowAnonymous]
         public List<Tuple<int,string>> SearchForText(string text,CancellationToken ct)
         {
@@ -78,7 +79,7 @@ namespace OCR.WebApi.Controllers
                 try
                 {
                     List <Tuple<int, string>> result = _pageService.SearchForText(text, ct);
-                    return result;
+                    return result; //formatting <ul<<li
                 }
                 catch (Exception e)
                 {
