@@ -55,32 +55,34 @@
             }
     </style>
 
-    @*<script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
+    <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
         <script type="text/javascript">
             if (typeof (Yamli) == 'object' && Yamli.init()) {
                 Yamli.yamlify('search');
             }
-        </script>*@
+        </script>
 
 
 </head>
 <body>
+<<<<<<< HEAD
     @*<form class="example">*@
 
     <input type="button" value="Upload Pages" id="idUploadPages" />
     <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
+=======
+    <form class="example">
+    <input id='myInput' @*onkeyup='searchTable()'*@ type='text' name="search" placeholder="Search...">
+>>>>>>> wip
     <button id="search"><i class="fa fa-search"></i></button>
     <br />
-    <br />
-    <br />
-    <br />
-    <div id="myResultTable">
+    @*<div id="myResultTable">
         <ul>
             <li>hi</li>
         </ul>
-    </div>
+    </div>*@
     <center>
-        <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
+        <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })"/>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -88,7 +90,7 @@
             </ul>
         </nav>
     </center>
-    @*</form>*@
+    </form>
 
 
 </body>
@@ -98,7 +100,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
         $('#idUploadPages').on('click', function () {
             $.ajax({
                 url: "@(Url.Action("Upload", "Page"))",
@@ -115,24 +116,32 @@
             });
         });
 
-        $('#search').on('click',function () {
+
+        $('#search').on('click', function () {
+            var text = $("#myInput").val();
             $.ajax({
                 type: "POST",
-                url: '/Page/SearchForText',
-                data: param = "abc", //why? ma aam toussal??
+                url: '/Page/SearchForText?search=' + text,
+                //data: { search:text }, //why? ma aam toussal??
                 contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: successFunc,
+                dataType: "text",
+                cache : false,
+                async: true,
+                success: function(data) {
+
+                    document.write(data);
+
+                },
                 error: errorFunc
             });
 
-            function successFunc(data, status) {
-                alert(data); //
-               // $('#myResultTable').html(data);
-            }
+            //function successFunc(data, status) {
+            //    alert("Done"); //
+            //   // $('#myResultTable').html(data);
+            //}
 
-            function errorFunc() {
-                alert('error');
+            function errorFunc(result) {
+                alert(result.status);
             }
         });
 

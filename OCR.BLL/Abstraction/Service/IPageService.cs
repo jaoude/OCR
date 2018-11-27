@@ -11,7 +11,7 @@ namespace OCR.BLL.Abstraction.Service
     {
         Task <bool> UploadPages(List<PageUploadDto> pages, CancellationToken ct);
         Task<byte[]> GetDummyImage(int imageId, CancellationToken ct);
-        List<Tuple<int, string>> SearchForText(string text, CancellationToken ct);
+        Task<string> SearchForText(string text, CancellationToken ct);
 
     }
 }

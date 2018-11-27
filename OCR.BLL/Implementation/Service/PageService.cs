@@ -66,10 +66,17 @@ namespace OCR.BLL.Implementation.Service
             byte[] imageData = _uow.Pages.Get(imageId).Image;
             return imageData;
         }
-        public List<Tuple<int, string>> SearchForText(string text, CancellationToken ct)
+        public async Task<string> SearchForText(string text, CancellationToken ct)
         {
-            return _uow.Pages.Get().Where(pg => pg.FullText.Contains(text)).
+            List<Tuple<int, string>> result =  _uow.Pages.Get().Where(pg => pg.FullText.Contains(text)).
                 Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text)-20,40))).ToList();
+            string output = "<ul>";
+            foreach (var c in result)
+            {
+                output += "<li>" + c.Item2 + "</li>";
+            }
+            output += "</ul>";
+            return output;
         }
     }
 }
