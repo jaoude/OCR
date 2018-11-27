@@ -66,6 +66,8 @@
 </head>
 <body>
     @*<form class="example">*@
+
+    <input type="button" value="Upload Pages" id="idUploadPages" />
     <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
     <button id="search"><i class="fa fa-search"></i></button>
     <br />
@@ -96,6 +98,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('#idUploadPages').on('click', function () {
+            $.ajax({
+                url: "@(Url.Action("Upload", "Page"))",
+                type: "POST",
+                //data: null,
+                cache: false,
+                async: true,
+                success: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(error.responseText)
+                },
+            });
+        });
 
         $('#search').on('click',function () {
             $.ajax({

@@ -83,13 +83,14 @@ namespace OCR.WebApi
                 app.UseDatabaseErrorPage();
 
                 app.UseDeveloperExceptionPage();
+
                 app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+                // specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c =>
                 {
-                    c.RoutePrefix = "help";
-                    c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1");
-                    c.InjectStylesheet("../css/swagger.min.css");
-
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
             }
             else

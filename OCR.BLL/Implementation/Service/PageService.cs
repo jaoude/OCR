@@ -20,85 +20,47 @@ namespace OCR.BLL.Implementation.Service
         {
         }
 
-        public async Task UploadPages(List<PageUploadDto> pages, CancellationToken ct)
+        private async Task<bool> UploadPage(string txtName, string imgName, int pageNumber, CancellationToken ct)
         {
-            List<Page> pageEntities = new List<Page>();
-            Page pageEntity1 = new Page();
-            pageEntity1.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity1.IssueNumber = 42;
-            pageEntity1.PageNumber = 4467;
-            pageEntity1.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.txt");
-            pageEntity1.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4467.gif");
-            pageEntities.Add(pageEntity1);
+            string path = @"C:\dev\temp_delete\OCR\OCR.WebApi\wwwroot\images\Pages\";
+            DateTime issueDate = Convert.ToDateTime("09/27/2018");
+            int issueNumber = 4467;
 
-            Page pageEntity2 = new Page();
-            pageEntity2.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity2.IssueNumber = 42;
-            pageEntity2.PageNumber = 4468;
-            pageEntity2.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4468.txt");
-            pageEntity2.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4468.gif");
-            pageEntities.Add(pageEntity2);
+            bool result = false;
+            if (!_uow.Pages.Get().Any(c => c.PageNumber == pageNumber))
+            {
+                _uow.Pages.Add(new Page()
+                {
+                    IssuDate = issueDate,
+                    IssueNumber = issueNumber,
+                    PageNumber = pageNumber,
+                    FullText = File.ReadAllText(path + txtName),
+                    Image = File.ReadAllBytes(path + imgName)
+                });
+                await _uow.SaveChangesAsync(ct);
+                result = true;
+            }
 
-            Page pageEntity3 = new Page();
-            pageEntity3.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity3.IssueNumber = 42;
-            pageEntity3.PageNumber = 4469;
-            pageEntity3.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4469.txt");
-            pageEntity3.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4469.gif");
-            pageEntities.Add(pageEntity3);
-
-            Page pageEntity4 = new Page();
-            pageEntity4.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity4.IssueNumber = 42;
-            pageEntity4.PageNumber = 4470;
-            pageEntity4.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4470.txt");
-            pageEntity4.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4470.gif");
-            pageEntities.Add(pageEntity4);
-
-            Page pageEntity5 = new Page();
-            pageEntity5.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity5.IssueNumber = 42;
-            pageEntity5.PageNumber = 4471;
-            pageEntity5.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4471.txt");
-            pageEntity5.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4471.gif");
-            pageEntities.Add(pageEntity5);
-
-            Page pageEntity6 = new Page();
-            pageEntity6.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity6.IssueNumber = 42;
-            pageEntity6.PageNumber = 4472;
-            pageEntity6.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4472.txt");
-            pageEntity6.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4472.gif");
-            pageEntities.Add(pageEntity6);
-
-            Page pageEntity7 = new Page();
-            pageEntity7.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity7.IssueNumber = 42;
-            pageEntity7.PageNumber = 4473;
-            pageEntity7.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4473.txt");
-            pageEntity7.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4473.gif");
-            pageEntities.Add(pageEntity7);
-
-            Page pageEntity8 = new Page();
-            pageEntity8.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity8.IssueNumber = 42;
-            pageEntity8.PageNumber = 4474;
-            pageEntity8.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4474.txt");
-            pageEntity8.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4474.gif");
-            pageEntities.Add(pageEntity8);
-
-            Page pageEntity9 = new Page();
-            pageEntity9.IssuDate = Convert.ToDateTime("09/27/2018");
-            pageEntity9.IssueNumber = 42;
-            pageEntity9.PageNumber = 4475;
-            pageEntity9.FullText = File.ReadAllText(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4475.txt");
-            pageEntity9.Image = File.ReadAllBytes(@"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\4475.gif");
-            pageEntities.Add(pageEntity9);
-
-
-            _uow.Pages.AddRange(pageEntities);
-            _uow.SaveChanges();
+            return result;
         }
+
+
+        public async Task<bool> UploadPages(List<PageUploadDto> pages, CancellationToken ct)
+        {
+            bool result =
+                await UploadPage("4467.txt", "4467.gif", 4467, ct)
+                || await UploadPage("4468.txt", "4468.gif", 4468, ct)
+                || await UploadPage("4469.txt", "4469.gif", 4469, ct)
+                || await UploadPage("4470.txt", "4470.gif", 4470, ct)
+                || await UploadPage("4471.txt", "4471.gif", 4471, ct)
+                || await UploadPage("4472.txt", "4472.gif", 4472, ct)
+                || await UploadPage("4473.txt", "4473.gif", 4473, ct)
+                || await UploadPage("4474.txt", "4474.gif", 4474, ct)
+                || await UploadPage("4475.txt", "4475.gif", 4475, ct);
+
+            return result;
+        }
+
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
         {
             byte[] imageData = _uow.Pages.Get(imageId).Image;
