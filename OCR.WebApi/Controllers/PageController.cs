@@ -9,11 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OCR.BLL.Abstraction;
 using OCR.BLL.Abstraction.Service;
-using OCR.BLL.Dto.Request;
-using OCR.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
-using System.Net;
 
 namespace OCR.WebApi.Controllers
 {
@@ -78,26 +73,31 @@ namespace OCR.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public /*List<Tuple<int, string>>*/ /*Task<ActionResult>*/ async Task<string> SearchForText(string search,CancellationToken ct)
+        public /*List<Tuple<int, string>>*/ /*Task<ActionResult>*/async Task<ActionResult> SearchForText(string search,CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    return await _pageService.SearchForText(search, ct);
-                    ////await Task.Delay(5000);
-                    //string output = "<ul>";
-                    //foreach (var c in result)
-                    //{
-                    //    output += "<li>" + c.Item2 + "</li>";
-                    //}
-                    //output += "</ul>";
-                    //return (output);//StatusCode(205); 
-                    ////return result;
+                    List<Tuple<int, string>> result = await _pageService.SearchForText(search, ct);
+                    if (result != null)
+                    {
+                        string output = "<ul>";
+                        foreach (var c in result)
+                        {
+                            output += "<li>" + c.Item2 + "</li>";
+                        }
+                        output += "</ul>";
+                        return Json(new { success = true, responseText = output });
+                    }
+                    return Json(new { success = false, responseText = "couldn't search for text" });
+                    // return (output);//StatusCode(205); 
+                    //return result;
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e.Message);
+                    return Json(new { success = false, responseText = e.Message });
                 }
             }
             return null;

@@ -96,6 +96,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
         $('#idUploadPages').on('click', function () {
             $.ajax({
                 url: "@(Url.Action("Upload", "Page"))",
@@ -107,7 +108,7 @@
                     alert(response.responseText);
                 },
                 error: function (response) {
-                    alert(error.responseText)
+                    alert(response.responseText)
                 },
             });
         });
@@ -120,25 +121,15 @@
                 url: '/Page/SearchForText?search=' + text,
                 //data: { search:text }, //why? ma aam toussal??
                 contentType: "application/json; charset=utf-8",
-                dataType: "text",
                 cache : false,
                 async: true,
-                success: function(data) {
-
-                    document.write(data);
-
+                success: function(response) {
+                    alert(response.responseText);
                 },
-                error: errorFunc
+                error: function (response) {
+                    alert(response.responseText);
+                },
             });
-
-            //function successFunc(data, status) {
-            //    alert("Done"); //
-            //   // $('#myResultTable').html(data);
-            //}
-
-            function errorFunc(result) {
-                alert(result.status);
-            }
         });
 
 

@@ -19,13 +19,11 @@ namespace OCR.BLL.Implementation.Service
         public PageService(IUnitOfWork uow, ILogger<PageService> logger, IModelMapHelper mapper) : base(uow, logger, mapper)
         {
         }
-
         private async Task<bool> UploadPage(string txtName, string imgName, int pageNumber, CancellationToken ct)
         {
             string path = @"C:\dev\temp_delete\OCR\OCR.WebApi\wwwroot\images\Pages\";
             DateTime issueDate = Convert.ToDateTime("09/27/2018");
             int issueNumber = 4467;
-
             bool result = false;
             if (!_uow.Pages.Get().Any(c => c.PageNumber == pageNumber))
             {
@@ -43,8 +41,6 @@ namespace OCR.BLL.Implementation.Service
 
             return result;
         }
-
-
         public async Task<bool> UploadPages(List<PageUploadDto> pages, CancellationToken ct)
         {
             bool result =
@@ -60,23 +56,24 @@ namespace OCR.BLL.Implementation.Service
 
             return result;
         }
-
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
         {
             byte[] imageData = _uow.Pages.Get(imageId).Image;
             return imageData;
         }
-        public async Task<string> SearchForText(string text, CancellationToken ct)
+
+        public async Task<List<Tuple<int, string>>> SearchForText(string text, CancellationToken ct)
         {
             List<Tuple<int, string>> result =  _uow.Pages.Get().Where(pg => pg.FullText.Contains(text)).
                 Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text)-20,40))).ToList();
-            string output = "<ul>";
-            foreach (var c in result)
-            {
-                output += "<li>" + c.Item2 + "</li>";
-            }
-            output += "</ul>";
-            return output;
+            return result;
+            //string output = "<ul>";
+            //foreach (var c in result)
+            //{
+            //    output += "<li>" + c.Item2 + "</li>";
+            //}
+            //output += "</ul>";
+            //return output;
         }
     }
 }
