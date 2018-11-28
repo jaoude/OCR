@@ -55,7 +55,7 @@
     <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
         <script type="text/javascript">
             if (typeof (Yamli) == 'object' && Yamli.init()) {
-                Yamli.yamlify('search');
+                Yamli.yamlify('#myImput');
             }
         </script>
 
@@ -72,7 +72,7 @@
    
     <center>
         <div class="left">
-            <img id="myimage" src="@Url.Action("GetDummyImage", "Page")?id=1" />
+            <img id="myimage" src="@Url.Action("GetDummyImage", "Page")?id=2" />
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a id="previous" class="page-link" href="#">Previous</a></li>
@@ -116,9 +116,9 @@
             });
         });
 
-        $("#myInput").on("change paste keyup", function () {
-            submitSearch();
-        });
+        //$("#myInput").on("change paste keyup", function () {
+        //    submitSearch();
+        //});
 
 
         $('#search').on('click', function () {
@@ -143,7 +143,6 @@
             $.ajax({
                 type: "POST",
                 url: '/Page/SearchForText?search=' + text,
-                //data: { search:text }, //why? ma aam toussal?? mneb2a menfakker fiya shi nhar
                 contentType: "application/json; charset=utf-8",
                 cache: false,
                 async: true,
