@@ -73,7 +73,7 @@ namespace OCR.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public /*List<Tuple<int, string>>*/ /*Task<ActionResult>*/async Task<ActionResult> SearchForText(string search,CancellationToken ct)
+        public async Task<ActionResult> SearchForText(string search,CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -82,22 +82,19 @@ namespace OCR.WebApi.Controllers
                     List<Tuple<int, string>> result = await _pageService.SearchForText(search, ct);
                     if (result != null)
                     {
-                        string output = "<ul>";
+                        string output = "";
                         foreach (var c in result)
                         {
-                            output += "<li>" + c.Item2 + "</li>";
+                            output += "<option id=" + c.Item1 + ">" + c.Item2 + "</option>";
                         }
-                        output += "</ul>";
                         return Json(new { success = true, responseText = output });
                     }
                     return Json(new { success = false, responseText = "couldn't search for text" });
-                    // return (output);//StatusCode(205); 
-                    //return result;
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e.Message);
-                    return Json(new { success = false, responseText = e.Message });
+                    return Json(new { success = false, responseText = "" });
                 }
             }
             return null;

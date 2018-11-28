@@ -35,24 +35,21 @@
             display: table;
         }
 
-        #customers {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
+        .left {
+            float: left;
+            width: 75%;
+            overflow: hidden;
         }
 
-            #customers td, #customers th {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
+        .right {
+            float: left;
+            width: 25%;
+            overflow: hidden;
+        }
 
-            #customers tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-
-            #customers tr:hover {
-                background-color: #ddd;
-            }
+        table, th, td {
+            border: 1px solid black;
+        }
     </style>
 
     <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
@@ -69,22 +66,23 @@
     <input type="button" value="Upload Pages" id="idUploadPages" />
     
     <form class="example">
-    <input id='myInput' @*onkeyup='searchTable()'*@ type='text' name="search" placeholder="Search...">
+    <input id='myInput' type='text' name="search" placeholder="Search...">
     <button id="search"><i class="fa fa-search"></i></button>
     <br />
-    @*<div id="myResultTable">
-        <ul>
-            <li>hi</li>
-        </ul>
-    </div>*@
+   
     <center>
-        <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })"/>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+        <div class="left">
+            <img id="myimage" src="@Url.Action("GetDummyImage", "Page")?id=1" />
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a id="previous" class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a id="next" class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="myResultTable" class="right">
+            <select id="Results" size="10"></select>
+        </div>
     </center>
     </form>
 
@@ -96,6 +94,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('.example').submit(function (event) {
+            event.preventDefault();
+            e.stopPropagation();
+        });
 
         $('#idUploadPages').on('click', function () {
             $.ajax({
@@ -113,48 +116,46 @@
             });
         });
 
+        $("#myInput").on("change paste keyup", function () {
+            submitSearch();
+        });
+
 
         $('#search').on('click', function () {
+            submitSearch();
+        });
+
+        $('#previous').on('click', function () {
+        });
+
+        $('#next').on('click', function () {
+        });
+
+        $("select#Results").change(function () {
+            var id = $(this).children(":selected").attr('id');
+            $("#myimage").attr("src", "@Url.Action("GetDummyImage", "Page")?id="+id);
+        });
+
+
+
+        function submitSearch() {
             var text = $("#myInput").val();
             $.ajax({
                 type: "POST",
                 url: '/Page/SearchForText?search=' + text,
-                //data: { search:text }, //why? ma aam toussal??
+                //data: { search:text }, //why? ma aam toussal?? mneb2a menfakker fiya shi nhar
                 contentType: "application/json; charset=utf-8",
-                cache : false,
+                cache: false,
                 async: true,
-                success: function(response) {
-                    alert(response.responseText);
+                success: function (response) {
+                    $('#Results').html(response.responseText);
                 },
                 error: function (response) {
                     alert(response.responseText);
                 },
             });
-        });
-
-
-        function searchTable() {
-            var input, filter, found, table, tr, td, i, j;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("customers");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                    found = false;
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
         }
-         });
+    });
 </script>
 
 @*Add ajax jquery call to call the pagecontroller searchfortext
