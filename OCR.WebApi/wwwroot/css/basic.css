@@ -1,0 +1,57 @@
+﻿form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.left {
+    float: left;
+    width: 75%;
+    overflow: hidden;
+}
+
+.right {
+    float: left;
+    width: 25%;
+    overflow: hidden;
+}
+
+#myResultTable {
+    display: none;
+    margin-top:20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+#page-image{
+    border:1px solid black;
+    margin:5px;
+}
+
+#Results {
+    overflow-y: hidden;
+    background-image: none;
+}

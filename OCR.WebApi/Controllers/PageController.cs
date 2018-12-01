@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -87,7 +85,7 @@ namespace OCR.WebApi.Controllers
                         {
                             output += "<option id=" + c.Item1 + ">" + c.Item2 + "</option>";
                         }
-                        return Json(new { success = true, responseText = output });
+                        return Json(new { success = true, responseText = output, size=result.Count});
                     }
                     return Json(new { success = false, responseText = "couldn't search for text" });
                 }

@@ -6,73 +6,28 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <style>
-        form.example input[type=text] {
-            padding: 10px;
-            font-size: 17px;
-            border: 1px solid grey;
-            float: left;
-            width: 80%;
-            background: #f1f1f1;
-        }
-
-        form.example button {
-            float: left;
-            width: 20%;
-            padding: 10px;
-            background: #2196F3;
-            color: white;
-            font-size: 17px;
-            border: 1px solid grey;
-            border-left: none;
-            cursor: pointer;
-        }
-
-        form.example::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        .left {
-            float: left;
-            width: 75%;
-            overflow: hidden;
-        }
-
-        .right {
-            float: left;
-            width: 25%;
-            overflow: hidden;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/bootswatch.css" />
+    <link rel="stylesheet" href="~/css/basic.css" />
 
     <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
-        <script type="text/javascript">
-            if (typeof (Yamli) == 'object' && Yamli.init()) {
-                Yamli.yamlify('#myImput');
-            }
-        </script>
-
+    <script type="text/javascript">
+        if (typeof (Yamli) == 'object' && Yamli.init()) {
+            Yamli.yamlify('#myImput');
+        }
+    </script>
 
 </head>
 <body>
 
-    <input type="button" value="Upload Pages" id="idUploadPages" />
+    @*<input type="button" value="Upload Pages" id="idUploadPages" />*@
     
     <form class="example">
     <input id='myInput' type='text' name="search" placeholder="Search...">
     <button id="search"><i class="fa fa-search"></i></button>
     <br />
-   
     <center>
         <div class="left">
-            <img id="myimage" src="@Url.Action("GetDummyImage", "Page")?id=2" />
+            <img id="page-image" src="@Url.Action("GetDummyImage", "Page")?id=4467" />
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a id="previous" class="page-link" href="#">Previous</a></li>
@@ -81,23 +36,19 @@
             </nav>
         </div>
         <div id="myResultTable" class="right">
-            <select id="Results" size="10"></select>
+            <select id="Results"></select>
         </div>
     </center>
     </form>
-
-
 </body>
 </html>
-
-
 
 <script type="text/javascript">
     $(document).ready(function () {
 
         $('.example').submit(function (event) {
             event.preventDefault();
-            e.stopPropagation();
+            event.stopPropagation();
         });
 
         $('#idUploadPages').on('click', function () {
@@ -136,8 +87,6 @@
             $("#myimage").attr("src", "@Url.Action("GetDummyImage", "Page")?id="+id);
         });
 
-
-
         function submitSearch() {
             var text = $("#myInput").val();
             $.ajax({
@@ -147,6 +96,12 @@
                 cache: false,
                 async: true,
                 success: function (response) {
+                    if (response.responseText != "") {
+                        $('#myResultTable').show();
+                        $('#Results').attr('size', Math.max(2, response.size));
+                    } else {
+                        $('#myResultTable').hide();
+                    }
                     $('#Results').html(response.responseText);
                 },
                 error: function (response) {
