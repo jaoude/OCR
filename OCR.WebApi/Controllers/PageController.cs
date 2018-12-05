@@ -63,6 +63,7 @@ namespace OCR.WebApi.Controllers
                 }
                 catch (Exception e)
                 {
+                    //return await GetDummyImage(id + 1, ct);
                     _logger.LogError(e.Message);
                 }
             }

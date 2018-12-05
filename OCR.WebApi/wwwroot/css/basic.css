@@ -7,16 +7,17 @@
     background: #f1f1f1;
 }
 
-form.example button {
+#search {
     float: left;
     width: 20%;
     padding: 10px;
-    background: #2196F3;
-    color: white;
     font-size: 17px;
     border: 1px solid grey;
     border-left: none;
     cursor: pointer;
+    color: #fff;
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
 }
 
 form.example::after {
@@ -54,4 +55,14 @@ table, th, td {
 #Results {
     overflow-y: hidden;
     background-image: none;
+}
+
+.pagination-div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pagination-div button{
+    width: 120px;
 }
