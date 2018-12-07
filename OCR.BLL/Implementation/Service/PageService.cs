@@ -63,9 +63,15 @@ namespace OCR.BLL.Implementation.Service
 
         public async Task<List<Tuple<int, string>>> SearchForText(string text, CancellationToken ct)
         {
-            List<Tuple<int, string>> result =  _uow.Pages.Get().Where(pg => pg.FullText.ToLower().Contains(text.ToLower())).
-                Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text)-20,40))).ToList();
-            return result;
+            //List<Page> Pages = _uow.Pages.GetAllAsync(ct) pg => pg.FullText.ToLower().Contains(text.ToLower()));
+
+
+            //    Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text) - 20, 40))).ToList();
+
+
+            //List<Tuple<int, string>> result = await _uow.Pages.Get().Where(pg => pg.FullText.ToLower().Contains(text.ToLower())).
+            //    Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text)-20,40))).ToList();
+            return await _uow.Pages.GetDistinctByTextAsync(text, ct);
         }
     }
 }

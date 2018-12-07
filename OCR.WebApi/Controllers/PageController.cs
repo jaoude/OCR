@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,11 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OCR.BLL.Abstraction;
 using OCR.BLL.Abstraction.Service;
-using OCR.BLL.Dto.Request;
-using OCR.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
-using System.Net;
 
 namespace OCR.WebApi.Controllers
 {
@@ -70,6 +63,7 @@ namespace OCR.WebApi.Controllers
                 }
                 catch (Exception e)
                 {
+                    //return await GetDummyImage(id + 1, ct);
                     _logger.LogError(e.Message);
                 }
             }
@@ -78,18 +72,30 @@ namespace OCR.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public List<Tuple<int,string>> SearchForText(string text,CancellationToken ct)
+        public async Task<ActionResult> SearchForText(string search,CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    List <Tuple<int, string>> result = _pageService.SearchForText(text, ct);
-                    return result; //formatting <ul<<li
+                    List<Tuple<int, string>> result = await _pageService.SearchForText(search, ct);
+                    if (result != null)
+                    {
+                        string output = "<ul width=\"300px\">";
+                        foreach (var c in result)
+                        {
+                            output = 
+                            output += "<li id=" + c.Item1 + ">" + c.Item2 + "</li>";
+                        }
+                        output += "</ul>";
+                        return Json(new { success = true, responseText = output, size=result.Count});
+                    }
+                    return Json(new { success = false, responseText = "couldn't search for text" });
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e.Message);
+                    return Json(new { success = false, responseText = "" });
                 }
             }
             return null;
