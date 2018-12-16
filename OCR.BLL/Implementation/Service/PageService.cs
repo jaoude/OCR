@@ -57,9 +57,14 @@ namespace OCR.BLL.Implementation.Service
         }
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
         {
-
-            byte[] imageData = _uow.Pages.Get().FirstOrDefault(c => c.PageNumber == imageId).Image;
-            return imageData;
+            Page page = await _uow.Pages.GetAsync(imageId, ct);
+            if (page == null)
+            {
+                return null;
+            }
+            else
+                return page.Image;
+           
         }
 
         public async Task<List<Tuple<int, string>>> SearchForText(string text, CancellationToken ct)

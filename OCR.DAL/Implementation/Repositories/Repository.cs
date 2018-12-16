@@ -47,6 +47,7 @@ namespace OCR.DAL.Implementation.Repositories
             return await _db.Set<TEntity>().ToListAsync(ct);
 
         }
+        
 
 
 

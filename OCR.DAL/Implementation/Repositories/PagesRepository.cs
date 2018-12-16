@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using OCR.DAL.Abstraction.Repositories;
+using System.Threading.Tasks;
+using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace OCR.DAL.Implementation.Repositories
 {
@@ -13,6 +16,11 @@ namespace OCR.DAL.Implementation.Repositories
         public PagesRepository(ApplicationDbContext _db) : base(_db)
         {
            
+        }
+
+        public async Task<Page> GetAsync(int id, CancellationToken ct)
+        {
+            return await _db.Set<Page>().FirstOrDefaultAsync(c => c.PageNumber == id, ct);
         }
     }
 }

@@ -29,8 +29,8 @@
             <div class="left">
                 <img id="page-image" name="4467" src="@Url.Action("GetDummyImage", "Page")?id=4467" />
                 <div class="pagination-div">
-                    <button type="button" id="previous" class="btn btn-primary">Previous</button>
-                    <button type="button" id="next" class="btn btn-primary">Next</button>
+                    <button type="button" id="previous" class="btn btn-primary">&#8249;</button>
+                    <button type="button" id="next" class="btn btn-primary">&#8250;</button>
                 </div>
             </div>
             <div id="myResultTable" class="right">
@@ -74,15 +74,19 @@
             submitSearch();
         });
 
-        $('#previous').on('click', function () {
+        $('#next').on('click', function () {
             var id = parseInt($("#page-image").attr("name"));
             var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id - 1);
+            //alert(path);
+            if (path == null) {
+                alert("hi");
+            }
             $("#page-image").attr("src", path);
             $("#page-image").attr("name", id - 1);
 
         });
 
-        $('#next').on('click', function () {
+        $('#previous').on('click', function () {
             var id = parseInt($("#page-image").attr("name"));
             var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id + 1);
             $("#page-image").attr("src", path);

@@ -57,8 +57,12 @@ namespace OCR.WebApi.Controllers
             {
                 try
                 {
-                    var result = _pageService.GetDummyImage(id, ct);
-                    var image = new FileStreamResult(new System.IO.MemoryStream(result.Result), "image/jpeg");
+                    var result =  _pageService.GetDummyImage(id, ct).Result;
+                    if (result == null)
+                    {
+                        return null;// Content("<html>The page your are requesting is not available</html>");
+                    }
+                    var image = new FileStreamResult(new System.IO.MemoryStream(result), "image/jpeg");
                     return image;
                 }
                 catch (Exception e)
