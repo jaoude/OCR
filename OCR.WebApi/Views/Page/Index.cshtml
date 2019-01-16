@@ -77,7 +77,6 @@
         $('#next').on('click', function () {
             var id = parseInt($("#page-image").attr("name"));
             var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id - 1);
-            //alert(path);
             if (path == null) {
                 alert("hi");
             }
@@ -124,9 +123,3 @@
         }
     });
 </script>
-
-@*Add ajax jquery call to call the pagecontroller searchfortext
-    (string as parameter) retrn list of (page number, string )
-    Paste the result in the div.update (listbox)
-    Upon click on any reult => getImage(pagenumber)
-    On next arrow and previous arrow (getImage (pagenum-1), pagenum+1)*@

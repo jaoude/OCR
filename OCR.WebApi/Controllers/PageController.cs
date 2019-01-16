@@ -85,12 +85,12 @@ namespace OCR.WebApi.Controllers
                     List<Tuple<int, string>> result = await _pageService.SearchForText(search, ct);
                     if (result != null)
                     {
-                        string output = "";
+                        string output = ""; 
                         foreach (var c in result)
                         {
                             output += "<option id=" + c.Item1 + ">" + c.Item2 + "</option>";
                         }
-                        return Json(new { success = true, responseText = output, size=result.Count});
+                        return Json(new { success = true, responseText = output, size = result.Count });
                     }
                     return Json(new { success = false, responseText = "couldn't search for text" });
                 }

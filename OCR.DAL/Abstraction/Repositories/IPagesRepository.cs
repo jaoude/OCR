@@ -11,6 +11,7 @@ namespace OCR.DAL.Abstraction.Repositories
     public interface IPagesRepository : IRepository<Page>
     {
         Task<Page> GetAsync(int id, CancellationToken ct);
+        Task<List<Tuple<int, string>>> GetDistinctByTextAsync(string searchText, CancellationToken ct);
     }
 
 }

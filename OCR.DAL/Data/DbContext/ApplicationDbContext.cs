@@ -10,7 +10,7 @@ namespace OCR.DAL.DbContext
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Page> Page { get; set; }
-
+        public DbSet<Account> Account { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
