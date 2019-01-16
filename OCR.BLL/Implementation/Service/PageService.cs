@@ -49,10 +49,12 @@ namespace OCR.BLL.Implementation.Service
                 || await UploadPage("4470.txt", "4470.gif", 4470, ct)
                 || await UploadPage("4471.txt", "4471.gif", 4471, ct)
                 || await UploadPage("4472.txt", "4472.gif", 4472, ct)
-                || await UploadPage("4473.txt", "4473.gif", 4473, ct)
-                || await UploadPage("4474.txt", "4474.gif", 4474, ct)
-                || await UploadPage("4475.txt", "4475.gif", 4475, ct);
-
+                || await UploadPage("4473.txt", "4473.gif", 4473, ct);
+            return result;
+        }
+        public async Task<bool> UploadNewPage(int pagenumber, CancellationToken ct)
+        {
+            bool result = await UploadPage(pagenumber + ".txt", pagenumber + ".gif", pagenumber, ct);
             return result;
         }
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)

@@ -1,19 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Page";
 }
-<h2>Search for your page here</h2>
+<h2>Upload your new page here</h2>
 <hr />
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/basic.css" />
+
+
 </head>
 <body>
 
-    
+
     <form class="example">
-        <input type="button" value="Upload Pages" id="idUploadPages" />  
+        <input id='myInput' type='text' name="search" placeholder="Page number...">
+        <button id="search" class="btn btn-primary"><i class="fa fa-search"></i></button>
     </form>
 </body>
 </html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.example').submit(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        $('#search').on('click', function () {
+            var id = document.getElementById('myInput').value;
+            var string = "@Url.Action("UploadNew", "Page")?pagenumber=" + (id);
+            $.ajax({
+                url: string,
+                type: "POST",
+                //data: null,
+                cache: false,
+                async: true,
+                success: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText)
+                },
+            });
+        });
+    });
+</script>

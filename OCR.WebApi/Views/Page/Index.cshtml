@@ -17,11 +17,12 @@
         }
     </script>
 
+
 </head>
 <body>
 
     @*<input type="button" value="Upload Pages" id="idUploadPages" />*@
-    
+
     <form class="example">
         <input id='myInput' type='text' name="search" placeholder="Search...">
         <button id="search" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -39,6 +40,7 @@
             </div>
         </center>
     </form>
+   
 </body>
 </html>
 
@@ -66,11 +68,6 @@
             });
         });
 
-        //$("#myInput").on("change paste keyup", function () {
-        //    submitSearch();
-        //});
-
-
         $('#search').on('click', function () {
             submitSearch();
         });
@@ -83,7 +80,6 @@
             }
             $("#page-image").attr("src", path);
             $("#page-image").attr("name", id - 1);
-
         });
 
         $('#previous').on('click', function () {
@@ -91,7 +87,6 @@
             var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id + 1);
             $("#page-image").attr("src", path);
             $("#page-image").attr("name", id + 1);
-
         });
 
         $("select#Results").change(function () {

@@ -22,14 +22,13 @@ namespace OCR.WebApi.Controllers
 
             return View();
         }
-        [Authorize(Roles = "admin")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             return View();
         }
-
+        [Authorize()]
         public IActionResult Privacy()
         {
             return View();

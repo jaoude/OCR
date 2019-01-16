@@ -42,6 +42,25 @@ namespace OCR.WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> UploadNew(int pagenumber, CancellationToken ct)
+        {
+            try
+            {
+                bool result = await _pageService.UploadNewPage(pagenumber, ct);
+                if(result == true)
+                    return Json(new { success = true, responseText = "Success!" });
+                else
+                    return Json(new { success = false, responseText = "No page were loaded - the db already contain these pages" });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return Json(new { success = false, responseText = e.Message });
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
@@ -49,6 +68,12 @@ namespace OCR.WebApi.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public IActionResult Upload()
+        {
+            return View();
+        }
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetDummyImage(int id, CancellationToken ct)
@@ -60,14 +85,13 @@ namespace OCR.WebApi.Controllers
                     var result =  _pageService.GetDummyImage(id, ct).Result;
                     if (result == null)
                     {
-                        return null;// Content("<html>The page your are requesting is not available</html>");
+                        return null;
                     }
                     var image = new FileStreamResult(new System.IO.MemoryStream(result), "image/jpeg");
                     return image;
                 }
                 catch (Exception e)
                 {
-                    //return await GetDummyImage(id + 1, ct);
                     _logger.LogError(e.Message);
                 }
             }
@@ -88,7 +112,8 @@ namespace OCR.WebApi.Controllers
                         string output = ""; 
                         foreach (var c in result)
                         {
-                            output += "<option id=" + c.Item1 + ">" + c.Item2 + "</option>";
+                            string[] p = c.Item2.Split(search);
+                            output += "<option id=" + c.Item1 + ">" + p[0] + "<strong>"+search+ "</strong>" + p[1] + "</option>";
                         }
                         return Json(new { success = true, responseText = output, size = result.Count });
                     }
