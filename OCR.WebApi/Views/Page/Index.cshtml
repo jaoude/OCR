@@ -6,98 +6,48 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/bootswatch.css" />
+    <link rel="stylesheet" href="~/css/basic.css" />
 
-    <style>
-        form.example input[type=text] {
-            padding: 10px;
-            font-size: 17px;
-            border: 1px solid grey;
-            float: left;
-            width: 80%;
-            background: #f1f1f1;
+    <script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
+    <script type="text/javascript">
+        if (typeof (Yamli) == 'object' && Yamli.init()) {
+            Yamli.yamlify('#myImput');
         }
-
-        form.example button {
-            float: left;
-            width: 20%;
-            padding: 10px;
-            background: #2196F3;
-            color: white;
-            font-size: 17px;
-            border: 1px solid grey;
-            border-left: none;
-            cursor: pointer;
-        }
-
-        form.example::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        #customers {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-            #customers td, #customers th {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-
-            #customers tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-
-            #customers tr:hover {
-                background-color: #ddd;
-            }
-    </style>
-
-    @*<script type="text/javascript" src="//api.yamli.com/js/yamli_api.js"></script>
-        <script type="text/javascript">
-            if (typeof (Yamli) == 'object' && Yamli.init()) {
-                Yamli.yamlify('search');
-            }
-        </script>*@
-
+    </script>
 
 </head>
 <body>
-    @*<form class="example">*@
 
-    <input type="button" value="Upload Pages" id="idUploadPages" />
-    <input id='myInput' onkeyup='searchTable()' type='text' name="search" placeholder="Search...">
-    <button id="search"><i class="fa fa-search"></i></button>
-    <br />
-    <br />
-    <br />
-    <br />
-    <div id="myResultTable">
-        <ul>
-            <li>hi</li>
-        </ul>
-    </div>
-    <center>
-        <img src="@Url.Action("GetDummyImage", "Page", new { id = 1 })" alt="Person Image" />
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-    </center>
-    @*</form>*@
-
-
+    @*<input type="button" value="Upload Pages" id="idUploadPages" />*@
+    
+    <form class="example">
+        <input id='myInput' type='text' name="search" placeholder="Search...">
+        <button id="search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        <br />
+        <center>
+            <div class="left">
+                <img id="page-image" name="4467" src="@Url.Action("GetDummyImage", "Page")?id=4467" />
+                <div class="pagination-div">
+                    <button type="button" id="previous" class="btn btn-primary">&#8249;</button>
+                    <button type="button" id="next" class="btn btn-primary">&#8250;</button>
+                </div>
+            </div>
+            <div id="myResultTable" class="right">
+                <select id="Results"></select>
+            </div>
+        </center>
+    </form>
 </body>
 </html>
 
-
-
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('.example').submit(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
 
         $('#idUploadPages').on('click', function () {
             $.ajax({
@@ -110,59 +60,66 @@
                     alert(response.responseText);
                 },
                 error: function (response) {
-                    alert(error.responseText)
+                    alert(response.responseText)
                 },
             });
         });
 
-        $('#search').on('click',function () {
-            $.ajax({
-                type: "POST",
-                url: '/Page/SearchForText',
-                data: param = "abc", //why? ma aam toussal??
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc
-            });
+        //$("#myInput").on("change paste keyup", function () {
+        //    submitSearch();
+        //});
 
-            function successFunc(data, status) {
-                alert(data); //
-               // $('#myResultTable').html(data);
-            }
 
-            function errorFunc() {
-                alert('error');
-            }
+        $('#search').on('click', function () {
+            submitSearch();
         });
 
-
-        function searchTable() {
-            var input, filter, found, table, tr, td, i, j;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("customers");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                    found = false;
-                } else {
-                    tr[i].style.display = "none";
-                }
+        $('#next').on('click', function () {
+            var id = parseInt($("#page-image").attr("name"));
+            var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id - 1);
+            if (path == null) {
+                alert("hi");
             }
-        }
-         });
-</script>
+            $("#page-image").attr("src", path);
+            $("#page-image").attr("name", id - 1);
 
-@*Add ajax jquery call to call the pagecontroller searchfortext
-    (string as parameter) retrn list of (page number, string )
-    Paste the result in the div.update (listbox)
-    Upon click on any reult => getImage(pagenumber)
-    On next arrow and previous arrow (getImage (pagenum-1), pagenum+1)*@
+        });
+
+        $('#previous').on('click', function () {
+            var id = parseInt($("#page-image").attr("name"));
+            var path = "@Url.Action("GetDummyImage", "Page")?id=" + (id + 1);
+            $("#page-image").attr("src", path);
+            $("#page-image").attr("name", id + 1);
+
+        });
+
+        $("select#Results").change(function () {
+            var id = $(this).children(":selected").attr('id');
+            $("#page-image").attr("src", "@Url.Action("GetDummyImage", "Page")?id=" + id);
+            $("#page-image").attr("name", id);
+        });
+
+        function submitSearch() {
+            var text = $("#myInput").val();
+            $.ajax({
+                type: "POST",
+                url: '/Page/SearchForText?search=' + text,
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                async: true,
+                success: function (response) {
+                    if (response.responseText != "") {
+                        $('#myResultTable').show();
+                        $('#Results').attr('size', Math.max(2, response.size));
+                    } else {
+                        $('#myResultTable').hide();
+                    }
+                    $('#Results').html(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+            });
+        }
+    });
+</script>

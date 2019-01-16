@@ -1,11 +1,7 @@
-﻿
-using OCR.DAL.Abstraction.Repositories;
+﻿using OCR.DAL.Abstraction.Repositories;
 using System;
 using System.Threading;
-
 using System.Threading.Tasks;
-
-
 
 namespace OCR.DAL.Abstraction.UnitOfWork
 {
@@ -13,6 +9,6 @@ namespace OCR.DAL.Abstraction.UnitOfWork
     {
         IPagesRepository Pages { get; }
         Task<int> SaveChangesAsync(CancellationToken ct);
-        int SaveChanges();
+         int SaveChanges();
     }
 }

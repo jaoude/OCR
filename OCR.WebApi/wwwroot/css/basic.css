@@ -1,0 +1,68 @@
+﻿form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+#search {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    color: #fff;
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.left {
+    float: left;
+    width: 75%;
+    overflow: hidden;
+}
+
+.right {
+    float: left;
+    width: 25%;
+    overflow: hidden;
+}
+
+#myResultTable {
+    display: none;
+    margin-top:20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+#page-image{
+    border:1px solid black;
+    margin:5px;
+}
+
+#Results {
+    overflow-y: hidden;
+    background-image: none;
+}
+
+.pagination-div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pagination-div button{
+    width: 120px;
+}

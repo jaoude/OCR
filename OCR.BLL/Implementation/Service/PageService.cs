@@ -52,25 +52,23 @@ namespace OCR.BLL.Implementation.Service
                 || await UploadPage("4473.txt", "4473.gif", 4473, ct)
                 || await UploadPage("4474.txt", "4474.gif", 4474, ct)
                 || await UploadPage("4475.txt", "4475.gif", 4475, ct);
+
             return result;
         }
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
         {
-            byte[] imageData = _uow.Pages.Get().FirstOrDefault(c => c.PageNumber == imageId).Image;
-            return imageData;
-            //return array of byte data -2 et +2 
+            Page page = await _uow.Pages.GetAsync(imageId, ct);
+            if (page == null)
+            {
+                return null;
+            }
+            else
+                return page.Image;
+           
         }
 
         public async Task<List<Tuple<int, string>>> SearchForText(string text, CancellationToken ct)
         {
-            //List<Page> Pages = _uow.Pages.GetAllAsync(ct) pg => pg.FullText.ToLower().Contains(text.ToLower()));
-
-
-            //    Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text) - 20, 40))).ToList();
-
-
-            //List<Tuple<int, string>> result = await _uow.Pages.Get().Where(pg => pg.FullText.ToLower().Contains(text.ToLower())).
-            //    Select(res => new Tuple<int, string>(res.PageNumber, res.FullText.Substring(res.FullText.IndexOf(text)-20,40))).ToList();
             return await _uow.Pages.GetDistinctByTextAsync(text, ct);
         }
     }

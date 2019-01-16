@@ -12,10 +12,7 @@ namespace OCR.DAL.Abstraction.Repositories
 
     {
 
-        IEnumerable<TEntity> Get();
-
-
-
+        IEnumerable<TEntity> Get();  
         Task<List<TEntity>> GetAllAsync(CancellationToken ct);
 
 

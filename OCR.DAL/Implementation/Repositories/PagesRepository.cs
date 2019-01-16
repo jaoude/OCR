@@ -7,8 +7,8 @@ using System.Text;
 using OCR.DAL.Abstraction.Repositories;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace OCR.DAL.Implementation.Repositories
 {
@@ -28,12 +28,12 @@ namespace OCR.DAL.Implementation.Repositories
             {
                 int index = -1;
                 string fullText = page.FullText.Replace("\r\n", " ");
-                 if ((index = fullText.IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase)) != -1)
+                if ((index = fullText.IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase)) != -1)
                 {
                     int len = 100;
                     int fullTextLen = fullText.Length;
-                    int lowerBoundary = Math.Max (index - (len/2) , 0);
-                    int upperBoundary = Math.Min (index + len, fullTextLen) - index;
+                    int lowerBoundary = Math.Max(index - (len / 2), 0);
+                    int upperBoundary = Math.Min(index + len, fullTextLen) - index;
                     try
                     {
                         string text = fullText.Substring(lowerBoundary, len);
@@ -45,8 +45,12 @@ namespace OCR.DAL.Implementation.Repositories
                     }
                 }
             }
-
             return result.ToList();
+        }
+
+        public async Task<Page> GetAsync(int id, CancellationToken ct)
+        {
+            return await _db.Set<Page>().FirstOrDefaultAsync(c => c.PageNumber == id, ct);
         }
     }
 }
