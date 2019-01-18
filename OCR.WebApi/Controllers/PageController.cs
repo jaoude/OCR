@@ -22,7 +22,6 @@ namespace OCR.WebApi.Controllers
             _pageService = pageService;
         }
 
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Upload(CancellationToken ct)
@@ -74,6 +73,7 @@ namespace OCR.WebApi.Controllers
         {
             return View();
         }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetDummyImage(int id, CancellationToken ct)
@@ -122,7 +122,7 @@ namespace OCR.WebApi.Controllers
                 catch (Exception e)
                 {
                     _logger.LogError(e.Message);
-                    return Json(new { success = false, responseText = "" });
+                    return Json(new { success = false, responseText = "Nothing was found" });
                 }
             }
             return null;

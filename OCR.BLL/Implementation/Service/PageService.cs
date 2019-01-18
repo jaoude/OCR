@@ -19,6 +19,7 @@ namespace OCR.BLL.Implementation.Service
         public PageService(IUnitOfWork uow, ILogger<PageService> logger, IModelMapHelper mapper) : base(uow, logger, mapper)
         {
         }
+
         private async Task<bool> UploadPage(string txtName, string imgName, int pageNumber, CancellationToken ct)
         {
             string path = @"C:\Dev\OCR\OCR.WebApi\wwwroot\images\Pages\";
@@ -40,6 +41,11 @@ namespace OCR.BLL.Implementation.Service
             }
             return result;
         }
+        public async Task<bool> UploadNewPage(int pagenumber, CancellationToken ct)
+        {
+            bool result = await UploadPage(pagenumber + ".txt", pagenumber + ".gif", pagenumber, ct);
+            return result;
+        }
         public async Task<bool> UploadPages(List<PageUploadDto> pages, CancellationToken ct)
         {
             bool result =
@@ -50,13 +56,8 @@ namespace OCR.BLL.Implementation.Service
                 || await UploadPage("4471.txt", "4471.gif", 4471, ct)
                 || await UploadPage("4472.txt", "4472.gif", 4472, ct)
                 || await UploadPage("4473.txt", "4473.gif", 4473, ct)
-                || await UploadPage("4472.txt", "4472.gif", 4474, ct)
-                || await UploadPage("4473.txt", "4473.gif", 4475, ct);
-            return result;
-        }
-        public async Task<bool> UploadNewPage(int pagenumber, CancellationToken ct)
-        {
-            bool result = await UploadPage(pagenumber + ".txt", pagenumber + ".gif", pagenumber, ct);
+                || await UploadPage("4474.txt", "4474.gif", 4474, ct)
+                || await UploadPage("4475.txt", "4475.gif", 4475, ct);
             return result;
         }
         public async Task<byte[]> GetDummyImage(int imageId, CancellationToken ct)
@@ -70,7 +71,6 @@ namespace OCR.BLL.Implementation.Service
                 return page.Image;
            
         }
-
         public async Task<List<Tuple<int, string>>> SearchForText(string text, CancellationToken ct)
         {
             return await _uow.Pages.GetDistinctByTextAsync(text, ct);
